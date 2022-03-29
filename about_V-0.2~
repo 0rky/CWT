@@ -1,0 +1,10 @@
+1. data initialization is done after the plan is created, coz if FFTW_ESTIMATE have no effect but if FFTW_MEASURE is used it overwrites the input and the output data array, so data initialization in is done after the plan.
+
+2.IMPORTANT CHANGE: in this i have made a change from c2c function to r2c type function, results are consistent with the c2c version (V-0.1).
+3. converting to r2c and c2r, the filter need to rearrange as the symmetry is not horizontal, but the symmetry is vertical so right half of the filter is not used due to redundancy. so have to rearrange the filter to suit the data from the r2c function.
+
+4.all amlloc are changed to fftwf_malloc so that data are aligned properly in memory to take advantage of SIMD.
+
+in V0.3:
+
+implement the scale list.

@@ -1,0 +1,10 @@
+Change Log: V=0.4
+
+1. here openmp is implemented.
+2. as filter_dx and filter-dy are global variables i use #pragma omp threadprivate(list) construct.
+3. except for variable in and transform all other are declared inside the for loop since they are dynamic arrays so they are created in the heap instead of stack and so these cannot be copied in threads private location which is a heap so we have to declare them inside the loop, this is my theory. look for the shared and private variables. also as plan is not thread safe so they are in critical section.
+4. also note that in plan_backward inverse_dy is used so that only one plan is created instead of two. and we reuse it using inverse_dx and after that inverse_dy is used..see code.
+
+## more time can be saved by using wisdom.
+## check whether for each thread i can allocate the plan and memeory instead of 16 times now then for 4 threads only 4 times it have to be done. check with thread id the behaviour inside the loop. 
+## inplace fftw
